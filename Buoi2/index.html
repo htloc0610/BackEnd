@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- method="GET" 2048 ký tự lộ thiên, refresh lại không mất -->
+    <!-- post không lộ thông tin, nhưng 1 lần refresh lại mất -->
+    <!-- autocomplete tự động gợi ý -->
+    <!-- novalidate: không kiểm tra tính chính xác của dữ liệu khi gửi đi -->
+    <form
+      action="https://www.w3schools.com/action_page.php"
+      target="_blank"
+      method="post"
+      autocomplete="off"
+      novalidate
+    >
+      <label for="fullName">Họ tên</label>
+      <br />
+      <input type="text" name="fullName" id="fullName" />
+      <br />
+      <label for="email">Email:</label>
+      <br />
+      <input type="email" name="email" id="email" />
+      <br />
+      <br />
+      <input type="submit" value="Gửi" />
+    </form>
+  </body>
+</html>
