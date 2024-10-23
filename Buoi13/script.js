@@ -121,20 +121,20 @@
 //   ● Khi được đặt trước một Promise, nó sẽ đợi cho đến khi Promise kết thúc và trả về kết quả.
 //   ● Await chỉ có thể được sử dụng bên trong các hàm async.
 
-const fetchApi = async (api) => {
-  const respone = await fetch(api);
-  // console.log(respone);
-  const data = await respone.json();
-  // console.log(data);
-  return data;
-};
+// const fetchApi = async (api) => {
+//   const respone = await fetch(api);
+//   // console.log(respone);
+//   const data = await respone.json();
+//   // console.log(data);
+//   return data;
+// };
 
-// fetchApi("https://dummyjson.com/products").then((data) => {
+// // fetchApi("https://dummyjson.com/products").then((data) => {
+// //   console.log(data);
+// // });
+// fetchApi("http://localhost:3000/products").then((data) => {
 //   console.log(data);
 // });
-fetchApi("http://localhost:3000/products").then((data) => {
-  console.log(data);
-});
 
 // Hướng dẫn cấu hình:
 //   ● Bước 1: Gõ lệnh npm init để khởi tạo file package.json.
