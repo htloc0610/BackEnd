@@ -41,30 +41,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-  // const listUser = [
-  //   {
-  //     fullName: "Le Van A",
-  //     email: "levana@gmail.com",
-  //     cccd: {
-  //       fullName: "Le Van A",
-  //       number: "0123456789",
-  //     },
-  //   },
-  //   {
-  //     fullName: "Le Van B",
-  //     email: "levanb@gmail.com",
-  //   },
-  // ];
-  // console.log(listUser);
-  // console.log("OK");
-  // res.send("Hello World 123!");
   const products = await Product.find({});
   console.log(products);
-  res.render("product.pug", {
-    titlePage: "Danh sách sản phẩm",
-    message: "Hello there!",
+  res.render("products.pug", {
+    title: "Danh sách sản phẩm",
+    products: products,
   });
-  res.send("<h1>Sản phẩm</h1>");
 });
 
 app.get("/contact", (req, res) => {
