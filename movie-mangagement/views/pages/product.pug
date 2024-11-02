@@ -1,0 +1,11 @@
+extends ../layouts/index.pug
+
+block content
+  h1.text-2xl.font-bold.mb-4 abcd
+  .grid.grid-cols-4.gap-4
+    each item in products
+      .card.bg-white.shadow-md.rounded-lg.overflow-hidden.mb-4
+        .card-body.p-4
+          p.card-title.text-xl.font-semibold.mb-2 #{item.Title}
+          img.card-img-top.medium-img(src=`${item.Images[0]}`, alt="Poster")
+          p.card-text.text-gray-700 #{item.Year}

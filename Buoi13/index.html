@@ -7,9 +7,16 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="product-list">
-      <img src="" alt="" />
-    </div>
+    <style>
+      body.dark {
+        background: #000; /* Changed from 'dark' to '#000' */
+      }
+      .dark .test {
+        color: #fff;
+      }
+    </style>
+    <div class="test"></div>
+    <button id="change-mode">Sáng/Tối</button>
     <script type="module" src="script.js"></script>
   </body>
 </html>
