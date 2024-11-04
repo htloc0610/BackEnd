@@ -1,11 +1,11 @@
 const express = require("express");
-// const mongoose = require("mongoose");
+var bodyParser = require("body-parser");
+var methodOverride = require("method-override");
 require("dotenv").config();
 
 const router = require("./routers/client/index.router");
 const routerAdmin = require("./routers/admin/index.router");
 
-// mongoose.connect(process.env.MONGO_URL);
 const database = require("./config/database");
 
 const systemConfig = require("./config/system");
@@ -14,6 +14,9 @@ database.connect();
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(methodOverride("_method"));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("views", "./views");
 app.set("view engine", "pug");
