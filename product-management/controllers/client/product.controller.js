@@ -6,7 +6,6 @@ module.exports.index = async (req, res) => {
     status: "active",
     deleted: false,
   });
-  console.log(products);
 
   products.forEach((item) => {
     item.priceNew = parseFloat(
