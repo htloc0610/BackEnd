@@ -1,5 +1,8 @@
 const express = require("express");
 var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var session = require("express-session");
+var flash = require("express-flash");
 var methodOverride = require("method-override");
 require("dotenv").config();
 
@@ -17,6 +20,12 @@ const port = process.env.PORT;
 
 app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Flash
+app.use(cookieParser("keyboard cat"));
+app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(flash());
+// End Flash
 
 app.set("views", "./views");
 app.set("view engine", "pug");
