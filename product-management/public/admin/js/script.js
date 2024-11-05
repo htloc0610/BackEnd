@@ -95,11 +95,32 @@ if (formChangeMulti) {
       const inputsChecked = checkboxMulti.querySelectorAll(
         "input[name='id']:checked"
       );
+
+      const typeChange = e.target.elements.type.value;
+      if (typeChange == "delete-all") {
+        const isConfirm = confirm(
+          "Bạn có chắc muốn xoá những sản phẩm này không?"
+        );
+        if (!isConfirm) {
+          return;
+        }
+      }
+
       if (inputsChecked.length > 0) {
         let ids = [];
         const inputIds = formChangeMulti.querySelector("input[name='ids']");
+
         inputsChecked.forEach((input) => {
-          ids.push(input.getAttribute("value"));
+          const id = input.getAttribute("value");
+
+          if (typeChange == "change-position") {
+            const position = input
+              .closest("tr")
+              .querySelector("[name = 'position']").value;
+            ids.push(`${id}-${position}`);
+          } else {
+            ids.push(id);
+          }
         });
         inputIds.value = ids.join(", ");
         formChangeMulti.submit();

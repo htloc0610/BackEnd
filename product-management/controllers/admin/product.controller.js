@@ -35,6 +35,7 @@ module.exports.index = async (req, res) => {
   );
 
   const products = await Product.find(find)
+    .sort({ position: "desc" })
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
@@ -57,15 +58,50 @@ module.exports.changeStatus = async (req, res) => {
 
 //[PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-  const status = req.body.type;
+  const type = req.body.type;
   const ids = req.body.ids.split(", ");
-  await Product.updateMany({ _id: { $in: ids } }, { status: status });
+
+  switch (type) {
+    case "active":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      break;
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      break;
+    case "delete-all":
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { deleted: true, deletedAt: new Date() }
+      );
+      break;
+    case "change-position":
+      for (const item of ids) {
+        const [id, newPosition] = item.split("-");
+        await Product.updateOne(
+          { _id: id },
+          { position: parseInt(newPosition) }
+        );
+      }
+
+      break;
+
+    default:
+      break;
+  }
+
   res.redirect("back");
 };
 
 //[Delete] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
-  await Product.deleteOne({ _id: id });
+  // await Product.deleteOne({ _id: id });
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+    }
+  );
   res.redirect("back");
 };
