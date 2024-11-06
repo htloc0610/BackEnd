@@ -185,7 +185,7 @@ module.exports.editPatch = async (req, res) => {
 };
 
 // [GET] /admin/products/detail/:id
-module.exports.editPatch = async (req, res) => {
+module.exports.detail = async (req, res) => {
   try {
     if (req.params.id) {
       const find = {
