@@ -183,3 +183,20 @@ module.exports.editPatch = async (req, res) => {
   }
   res.redirect("back");
 };
+
+// [GET] /admin/products/detail/:id
+module.exports.editPatch = async (req, res) => {
+  try {
+    if (req.params.id) {
+      const find = {
+        deleted: false,
+        _id: req.params.id,
+      };
+      const product = await Product.findOne(find);
+      res.render("admin/pages/products/detail.pug", { product: product });
+    }
+  } catch {
+    req.flash("error", "Không tồn tại sản phẩm này");
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+};
