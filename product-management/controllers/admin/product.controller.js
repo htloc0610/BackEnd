@@ -5,6 +5,7 @@ const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const { Model } = require("mongoose");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -101,7 +102,7 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect("back");
 };
 
-//[Delete] /admin/products/delete/:id
+//[DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
   // await Product.deleteOne({ _id: id });
@@ -141,4 +142,44 @@ module.exports.createPost = async (req, res) => {
   await product.save();
 
   res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
+
+// [GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    if (req.params.id) {
+      const find = {
+        deleted: false,
+        _id: req.params.id,
+      };
+      const product = await Product.findOne(find);
+      res.render("admin/pages/products/edit.pug", { product: product });
+    }
+  } catch {
+    req.flash("error", "Không tồn tại sản phẩm này");
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+};
+
+// [PATCH] /admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+  try {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    req.body.position = parseInt(req.body.position);
+    if (req.file) {
+      req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
+    await Model.updateOne(
+      {
+        _id: req.params.id,
+      },
+      req.body
+    );
+    req.flash("success", "Cập nhật thành công");
+  } catch (error) {
+    req.flash("error", "Cập nhật thất bại");
+  }
+  res.redirect("back");
 };
